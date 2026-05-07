@@ -20,4 +20,23 @@ class ContaCorrenteTest {
             );
     }
 
+    @Test
+    void deveSacarNormalmente(){
+        ContaCorrente conta = new ContaCorrente("Tom", 100);
+        conta.sacar(50);
+        
+        assertEquals(50, conta.getSaldo());
+    }
+
+    @Test
+    void naoDeveSacarValorMaiorQueOSaldo(){
+        ContaCorrente conta = new ContaCorrente("Tom", 100);
+        assertThrows(IllegalArgumentException.class, () -> conta.sacar(150));
+    }
+
+    @Test
+    void naoDeveSacarValorNegativo(){
+        ContaCorrente conta = new ContaCorrente("Tom", 100);
+        assertThrows(IllegalArgumentException.class, () -> conta.sacar(-50));
+    }
 }

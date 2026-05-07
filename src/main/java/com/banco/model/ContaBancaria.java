@@ -52,11 +52,16 @@ public abstract class ContaBancaria {
         this.saldo += valor;
     }
 
-    public boolean sacar(double valor) {
-        if (valor > saldo)
-            return false;
+    public void sacar(double valor) {
+        if (valor > saldo){
+            throw new IllegalArgumentException("Saldo insuficiente");
+        }
+
+        if (valor < 0) {
+            throw new IllegalArgumentException("Valor de saque nao pode ser negativo");
+            }
+
         saldo -= valor;
-        return true;
     }
 
     public void validarInt(int numero) {
