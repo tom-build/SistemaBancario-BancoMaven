@@ -19,4 +19,24 @@ import static org.junit.jupiter.api.Assertions.*;
             );
     }
 
+    @Test
+    void deveSacarNormalmente(){
+        ContaPoupanca conta = new ContaPoupanca("Tom", 100);
+        conta.sacar(50);
+        
+        assertEquals(50, conta.getSaldo());
+    }
+
+    @Test
+    void naoDeveSacarValorMaiorQueOSaldo(){
+        ContaPoupanca conta = new ContaPoupanca("Tom", 100);
+        assertThrows(IllegalArgumentException.class, () -> conta.sacar(150));
+    }
+
+    @Test
+    void naoDeveSacarValorNegativo(){
+        ContaPoupanca conta = new ContaPoupanca("Tom", 100);
+        assertThrows(IllegalArgumentException.class, () -> conta.sacar(-50));
+    }
+
 }
