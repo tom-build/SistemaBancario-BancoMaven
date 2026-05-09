@@ -3,6 +3,7 @@ package com.banco.app;
 
 import com.banco.config.Database;
 import com.banco.service.ContaService;
+import com.banco.util.InputUtil;
 import com.banco.model.ContaBancaria;
 
 
@@ -39,14 +40,11 @@ public class ContaStart {
         }
         
             if (op == 1) {
-                System.out.print("Nome: ");
-                String nome = sc.nextLine();
+                String nome = InputUtil.lerString("Nome: ");
 
-                System.out.print("Saldo inicial: ");
-                double saldo = sc.nextDouble();
+                double saldo = InputUtil.lerDouble("Saldo inicial: ");
 
-                System.out.print("Tipo (corrente/poupanca): ");
-                String tipo = sc.next();
+                String tipo = InputUtil.lerString("Tipo (corrente/poupanca): ");
 
                 service.criarConta(nome, saldo, tipo);
                 System.out.println("Conta criada com sucesso.");
@@ -59,8 +57,7 @@ public class ContaStart {
                 }
             }
             else if(op == 3){
-                System.out.println("Digite o id referente à conta que deseja buscar");
-                int id = sc.nextInt();
+                int id = InputUtil.lerInt("Digite o id referente à conta que deseja buscar");
 
                 ContaBancaria conta = service.BuscarPorId(id); 
 
@@ -73,8 +70,7 @@ public class ContaStart {
             }
 
             else if(op == 4){
-                System.out.println("Digite o id referente a conta que queres depositar");
-                int id = sc.nextInt();
+                int id = InputUtil.lerInt("Digite o id referente a conta que queres depositar");
                 sc.nextLine();
 
                 try{
@@ -88,12 +84,10 @@ public class ContaStart {
                     System.out.println("Verifique se seus dados estao corretos");
                     System.out.println(conta);
 
-                    System.out.println("Confirmar transacao: (sim)S / N(nao)");
-                    String confirmacao = sc.nextLine();
+                    String confirmacao = InputUtil.lerString("Confirmar transacao: (sim)S / N(nao)");
 
                     if(confirmacao.equalsIgnoreCase("S")){
-                        System.out.println("Digite o valor do deposito");
-                        double valor = sc.nextDouble();
+                        double valor = InputUtil.lerDouble("Digite o valor do deposito");
 
                         sc.nextLine();
 
@@ -108,9 +102,7 @@ public class ContaStart {
             }
 
             else if(op == 5){
-                System.out.println("Digite o id referente a conta que vai realizar o saque");
-                int id = sc.nextInt();
-
+                int id = InputUtil.lerInt("Digite o id referente a conta que vai realizar o saque");
                 sc.nextLine();
 
                 try{
@@ -124,14 +116,10 @@ public class ContaStart {
                     System.out.println("Verifique se seus dados estao corretos");
                     System.out.println(conta);
 
-                    System.out.println("Confirmar saque (sim) S/N (nao)");
-                    String confirmacao = sc.nextLine();
+                    String confirmacao = InputUtil.lerString("Confirmar saque (sim) S/N (nao)");
 
                     if(confirmacao.equalsIgnoreCase("S")){
-                        System.out.println("Digite o valor do saque que deseja efetuar");
-                        double valor = sc.nextDouble();
-
-                        sc.next();
+                        double valor = InputUtil.lerDouble("Digite o valor do saque");
 
                         service.sacar(id, valor);
                         System.out.println("Saque realizado com sucesso");
@@ -146,8 +134,7 @@ public class ContaStart {
             
 
             else if(op == 6){
-                System.out.println("Digite o id da conta titular que deseja tranferir");
-                int idTitular = sc.nextInt();
+                int idTitular = InputUtil.lerInt("Digite o id da conta titular que deseja tranferir");
 
                 try{
                     ContaBancaria conta = service.BuscarPorId(idTitular);
@@ -158,8 +145,7 @@ public class ContaStart {
 
                     sc.nextLine();
                     
-                    System.out.println("Digite o id da conta destino da tranferencia");
-                    int idDestino = sc.nextInt();
+                    int idDestino = InputUtil.lerInt("Digite o id da conta destino da tranferencia");
 
                     ContaBancaria contaDestino = service.BuscarPorId(idDestino);
 
@@ -172,12 +158,10 @@ public class ContaStart {
                     System.out.println("Conta origem: " + conta);
                     System.out.println("Conta destino: " + contaDestino);
 
-                    System.out.println("Confirmar transacao (sim)S / N (nao)");
-                    String confirmacao = sc.nextLine();
-                                        
+                    String confirmacao = InputUtil.lerString("Confirmar transferencia (sim) S/N (nao)");
+
                     if(confirmacao.equalsIgnoreCase("S")){
-                        System.out.println("Digite o valor da tranferencia");
-                        double valor = sc.nextDouble();
+                        double valor = InputUtil.lerDouble("Digite o valor da transferencia");
                         sc.nextLine();
 
                         service.tranferencia(idTitular, idDestino, valor);
@@ -194,8 +178,7 @@ public class ContaStart {
             }
 
             else if(op == 7){
-                System.out.println("Escreva o id da conta que deseja excluir");
-                int id = sc.nextInt();
+                int id = InputUtil.lerInt("Escreva o id da conta que deseja excluir");
 
                 service.apagarConta(id);
             }
