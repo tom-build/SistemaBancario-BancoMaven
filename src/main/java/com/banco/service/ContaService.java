@@ -8,8 +8,11 @@ import com.banco.model.*;
 import java.util.List;
 
 public class ContaService {
-    private final ContaDAO dao = new ContaDAO();
+    private final ContaDAO dao;
 
+    public ContaService(ContaDAO dao) {
+        this.dao = dao;
+    }
 
     public void criarConta(String nome, double saldo, String tipo) {
         ContaBancaria conta = tipo.equalsIgnoreCase("corrente")
