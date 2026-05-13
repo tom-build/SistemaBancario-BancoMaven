@@ -66,4 +66,18 @@ public class ContaServiceTest {
 
         assertEquals(3, contas.size());
     }
+
+    @Test
+    void deveListarPorId() {
+        service.criarConta("João", 1000, "poupanca");
+
+        ContaBancaria conta = service.ListarContas().get(0);
+        ContaBancaria contaEncontrada = service.BuscarPorId(conta.getId());
+
+        assertNotNull(contaEncontrada);
+        assertEquals(conta.getNome(), contaEncontrada.getNome());
+        assertEquals(conta.getSaldo(), contaEncontrada.getSaldo());
+        assertEquals(conta.getTipo(), contaEncontrada.getTipo());
+
+    }
 }
