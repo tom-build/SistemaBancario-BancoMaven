@@ -24,15 +24,14 @@ public class ContaServiceTest {
 
         try {
             PreparedStatement create = conn.prepareStatement(
-            """
-            CREATE TABLE IF NOT EXISTS contas (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                nome TEXT NOT NULL,
-                saldo REAL NOT NULL,
-                tipo TEXT NOT NULL
-                )
-            """
-            );
+                    """
+                            CREATE TABLE IF NOT EXISTS contas (
+                                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                nome TEXT NOT NULL,
+                                saldo REAL NOT NULL,
+                                tipo TEXT NOT NULL
+                                )
+                            """);
 
             create.executeUpdate();
             PreparedStatement delete = conn.prepareStatement("DELETE FROM contas");
@@ -78,6 +77,17 @@ public class ContaServiceTest {
         assertEquals(conta.getNome(), contaEncontrada.getNome());
         assertEquals(conta.getSaldo(), contaEncontrada.getSaldo());
         assertEquals(conta.getTipo(), contaEncontrada.getTipo());
+    }
 
+    @Test
+    void deveDepositarNormalmente() {
+        service.criarConta("João", 1000, "poupanca");
+
+        ContaBancaria conta = service.ListarContas().get(0);
+        service.Depositar(conta.getId(), 500);
+        ContaBancaria contaAtualizada = service.BuscarPorId(conta.getId());
+
+        assertEquals(1500, contaAtualizada.getSaldo());
+        System.out.println(contaAtualizada);
     }
 }
