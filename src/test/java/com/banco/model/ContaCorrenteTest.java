@@ -47,12 +47,36 @@ class ContaCorrenteTest {
     }
 
     @Test
+    void naoDeveSacarValorZero() {
+        ContaCorrente conta = new ContaCorrente("Tom", 100);
+
+        assertThrows(IllegalArgumentException.class,
+            () -> conta.sacar(0));
+    }
+
+    @Test
     void deveDepositarNormalmente() {
         ContaCorrente conta = new ContaCorrente("Tom", 100);
 
         conta.depositar(50);
 
         assertEquals(150, conta.getSaldo());
+    }
+
+    @Test
+    void naoDeveDepositarValorNegativo() {
+        ContaCorrente conta = new ContaCorrente("Tom", 100);
+
+        assertThrows(IllegalArgumentException.class,
+            () -> conta.depositar(-50));
+    }
+
+    @Test
+    void naoDeveDepositarValorZero() {
+        ContaCorrente conta = new ContaCorrente("Tom", 100);
+
+        assertThrows(IllegalArgumentException.class,
+            () -> conta.depositar(0));
     }
 
     @Test
