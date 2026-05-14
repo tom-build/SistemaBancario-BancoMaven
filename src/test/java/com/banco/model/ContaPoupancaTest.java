@@ -39,7 +39,12 @@ import static org.junit.jupiter.api.Assertions.*;
         assertThrows(IllegalArgumentException.class, () -> conta.sacar(-50));
     }
 
-    
+    @Test
+    void naoDeveSacarValorZero(){
+        ContaPoupanca conta = new ContaPoupanca("Tom", 100);
+        assertThrows(IllegalArgumentException.class, () -> conta.sacar(0));
+    }
+
     @Test
     void deveDepositarNormalmente() {
         ContaPoupanca conta = new ContaPoupanca("Tom", 100);
@@ -55,6 +60,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
         assertThrows(IllegalArgumentException.class,
             () -> conta.depositar(-50));
+    }
+
+    @Test
+    void naoDeveDepositarValorZero() {
+        ContaPoupanca conta = new ContaPoupanca("Tom", 100);
+
+        assertThrows(IllegalArgumentException.class,
+            () -> conta.depositar(0));
     }
 
     @Test
