@@ -50,7 +50,7 @@ public class ContaServiceTest {
     void deveCriarConta() {
         service.criarConta("Maria", 500, "corrente");
 
-        assertTrue(service.ListarContas().stream()
+        assertTrue(service.listarContas().stream()
                 .anyMatch(c -> c.getNome().equals("maria") && c.getSaldo() == 500 && c.getTipo().equals("corrente")));
     }
 
@@ -60,7 +60,7 @@ public class ContaServiceTest {
         service.criarConta("Ana", 1500, "corrente");
         service.criarConta("Carlos", 2000, "poupanca");
 
-        List<ContaBancaria> contas = service.ListarContas();
+        List<ContaBancaria> contas = service.listarContas();
         contas.forEach(System.out::println);
 
         assertEquals(3, contas.size());
@@ -70,8 +70,8 @@ public class ContaServiceTest {
     void deveListarPorId() {
         service.criarConta("João", 1000, "poupanca");
 
-        ContaBancaria conta = service.ListarContas().get(0);
-        ContaBancaria contaEncontrada = service.BuscarPorId(conta.getId());
+        ContaBancaria conta = service.listarContas().get(0);
+        ContaBancaria contaEncontrada = service.buscarPorId(conta.getId());
 
         assertNotNull(contaEncontrada);
         assertEquals(conta.getNome(), contaEncontrada.getNome());
@@ -83,11 +83,56 @@ public class ContaServiceTest {
     void deveDepositarNormalmente() {
         service.criarConta("João", 1000, "poupanca");
 
-        ContaBancaria conta = service.ListarContas().get(0);
-        service.Depositar(conta.getId(), 500);
-        ContaBancaria contaAtualizada = service.BuscarPorId(conta.getId());
+        ContaBancaria conta = service.listarContas().get(0);
+        service.depositar(conta.getId(), 500);
+        ContaBancaria contaAtualizada = service.buscarPorId(conta.getId());
 
         assertEquals(1500, contaAtualizada.getSaldo());
         System.out.println(contaAtualizada);
     }
+
+    @Test
+    void deveSacarNormalmente() {
+        service.criarConta("João", 1000, "poupanca");
+
+        ContaBancaria conta = service.listarContas().get(0);
+        service.sacar(conta.getId(), 300);
+        ContaBancaria contaAtualizada = service.buscarPorId(conta.getId());
+
+        assertEquals(700, contaAtualizada.getSaldo());
+        System.out.println(contaAtualizada);
+    }
+    
+    @Test
+    void deveTransferirNormalmente() {
+        service.criarConta("João", 1000, "poupanca");
+        service.criarConta("Maria", 500, "corrente");
+
+        ContaBancaria contaOrigem = service.listarContas().get(0);
+        ContaBancaria contaDestino = service.listarContas().get(1);
+
+        service.tranferencia(contaOrigem.getId(), contaDestino.getId(), 200);
+
+        ContaBancaria contaOrigemAtualizada = service.buscarPorId(contaOrigem.getId());
+        ContaBancaria contaDestinoAtualizada = service.buscarPorId(contaDestino.getId());
+
+        assertEquals(800, contaOrigemAtualizada.getSaldo());
+        assertEquals(700, contaDestinoAtualizada.getSaldo());
+
+        System.out.println(contaOrigemAtualizada);
+        System.out.println(contaDestinoAtualizada);
+    }
+
+    @Test
+    void deveApagarConta() {
+        service.criarConta("João", 1000, "poupanca");
+
+        ContaBancaria conta = service.listarContas().get(0);
+        service.apagarConta(conta.getId());
+
+        ContaBancaria contaEncontrada = service.buscarPorId(conta.getId());
+        assertNull(contaEncontrada);
+        assertEquals(null, contaEncontrada);
+    }
+    
 }
