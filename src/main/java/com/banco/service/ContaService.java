@@ -22,15 +22,15 @@ public class ContaService {
         dao.salvar(conta);
     }
 
-    public List<ContaBancaria> ListarContas() {
+    public List<ContaBancaria> listarContas() {
         return dao.listar();
     }
 
-    public ContaBancaria BuscarPorId(int id){
+    public ContaBancaria buscarPorId(int id){
         return dao.buscarPorId(id);    
     }
 
-    public void Depositar(int id, double valor){        
+    public void depositar(int id, double valor){        
         ContaBancaria conta = dao.buscarPorId(id);
         conta.depositar(valor);
         dao.atualizarSaldo(conta.getId(), conta.getSaldo());
