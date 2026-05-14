@@ -26,7 +26,7 @@ public class ContaStart {
         while (true) {
             System.out.println("\n");
             System.out.println("1 - Criar conta");
-            System.out.println("2 - Listar contas");
+            System.out.println("2 - Listar contas"); 
             System.out.println("3 - Buscar por id");
             System.out.println("4 - Depositar");
             System.out.println("5 - Sacar");
@@ -53,15 +53,17 @@ public class ContaStart {
                 service.criarConta(nome, saldo, tipo);
                 System.out.println("Conta criada com sucesso.");
                 sc.nextLine();
+
             } else if (op == 2) {
                 System.out.println("Contas cadastradas:");
-                for (ContaBancaria c : service.ListarContas()) {
+                for (ContaBancaria c : service.listarContas()) {
                     System.out.println(c.getId() + " - " + c.getNome() + " | " + c.getTipo() + " | R$ " + c.getSaldo());
                 }
+                
             } else if (op == 3) {
                 int id = InputUtil.lerInt("Digite o id referente à conta que deseja buscar");
 
-                ContaBancaria conta = service.BuscarPorId(id);
+                ContaBancaria conta = service.buscarPorId(id);
 
                 if (conta != null) {
                     System.out.println("Conta encontrada:");
@@ -76,7 +78,7 @@ public class ContaStart {
                 sc.nextLine();
 
                 try {
-                    ContaBancaria conta = service.BuscarPorId(id);
+                    ContaBancaria conta = service.buscarPorId(id);
                     if (conta == null) {
                         System.out.println("Tranferencia invalidada, a conta digitada nao existe");
                         sc.nextLine();
@@ -93,7 +95,7 @@ public class ContaStart {
 
                         sc.nextLine();
 
-                        service.Depositar(id, valor);
+                        service.depositar(id, valor);
                         System.out.println("Deposito realizado com sucesso");
                     } else {
                         System.out.println("Transacao invalidada");
@@ -108,7 +110,7 @@ public class ContaStart {
                 sc.nextLine();
 
                 try {
-                    ContaBancaria conta = service.BuscarPorId(id);
+                    ContaBancaria conta = service.buscarPorId(id);
                     if (conta == null) {
                         System.out.println("Tranferencia invalida, a conta digitada nao existe");
                         sc.nextLine();
@@ -138,7 +140,7 @@ public class ContaStart {
                 int idTitular = InputUtil.lerInt("Digite o id da conta titular que deseja tranferir");
 
                 try {
-                    ContaBancaria conta = service.BuscarPorId(idTitular);
+                    ContaBancaria conta = service.buscarPorId(idTitular);
                     if (conta == null) {
                         System.out.println("A conta digitada nao existe");
                         return;
@@ -148,7 +150,7 @@ public class ContaStart {
 
                     int idDestino = InputUtil.lerInt("Digite o id da conta destino da tranferencia");
 
-                    ContaBancaria contaDestino = service.BuscarPorId(idDestino);
+                    ContaBancaria contaDestino = service.buscarPorId(idDestino);
 
                     if (contaDestino == null) {
                         System.out.println("Tranferencia invalida: A conta digitada nao existe");
