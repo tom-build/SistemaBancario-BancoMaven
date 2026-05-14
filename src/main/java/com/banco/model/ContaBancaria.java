@@ -49,23 +49,33 @@ public abstract class ContaBancaria {
     }
 
     public void depositar(double valor) {
-        this.saldo += valor;
+        if (valor <= 0) {
+            throw new IllegalArgumentException("Valor de deposito nao pode ser negativo ou zero");
+        }
+
+        saldo += valor;
     }
 
     public void sacar(double valor) {
-        if (valor > saldo){
+        if (valor > saldo) {
             throw new IllegalArgumentException("Saldo insuficiente");
         }
 
-        if (valor < 0) {
-            throw new IllegalArgumentException("Valor de saque nao pode ser negativo");
-            }
+        if (valor <= 0) {
+            throw new IllegalArgumentException("Valor de saque nao pode ser negativo ou zero");
+        }
 
         saldo -= valor;
     }
 
     public void validarInt(int numero) {
+        if (numero <= 0) {
+            throw new IllegalArgumentException("O numero deve ser positivo");
+        }
 
+        if (numero > Integer.MAX_VALUE) {
+            throw new IllegalArgumentException("O numero é muito grande");
+        }
     }
 
     public abstract String getTipo();
