@@ -1,6 +1,6 @@
 package com.banco.dao;
 
-import com.banco.config.SQLiteConnectionTest;
+import com.banco.config.GeraConection;
 import com.banco.model.*;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -19,7 +19,7 @@ public class ContaDAOtest {
     @BeforeEach
     void setup() {
 
-        Connection conn = SQLiteConnectionTest.conectar();
+        Connection conn = GeraConection.conectar();
 
         try {
             PreparedStatement create = conn.prepareStatement(

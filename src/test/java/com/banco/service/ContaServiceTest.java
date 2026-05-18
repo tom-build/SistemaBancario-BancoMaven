@@ -1,6 +1,6 @@
 package com.banco.service;
 
-import com.banco.config.SQLiteConnectionTest;
+import com.banco.config.GeraConection;
 import com.banco.dao.ContaDAO;
 import com.banco.model.ContaBancaria;
 
@@ -20,7 +20,7 @@ public class ContaServiceTest {
     @BeforeEach
     void setup() {
 
-        Connection conn = SQLiteConnectionTest.conectar();
+        Connection conn = GeraConection.conectar();
 
         try {
             PreparedStatement create = conn.prepareStatement(

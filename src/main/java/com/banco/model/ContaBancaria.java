@@ -38,10 +38,7 @@ public abstract class ContaBancaria {
         this.saldo = saldo;
     }
 
-    public static String formatar(String texto) {
-        return texto.trim().toLowerCase();
-    }
-
+    
     public static void validarSaldoPositivo(double valor) {
         if (valor < 0) {
             throw new IllegalArgumentException("O valor nao pode ser negativo");
@@ -52,7 +49,7 @@ public abstract class ContaBancaria {
         if (valor <= 0) {
             throw new IllegalArgumentException("Valor de deposito nao pode ser negativo ou zero");
         }
-
+        
         saldo += valor;
     }
 
@@ -60,30 +57,36 @@ public abstract class ContaBancaria {
         if (valor > saldo) {
             throw new IllegalArgumentException("Saldo insuficiente");
         }
-
+        
         if (valor <= 0) {
             throw new IllegalArgumentException("Valor de saque nao pode ser negativo ou zero");
         }
 
         saldo -= valor;
     }
-
-    public void validarInt(int numero) {
+    
+    public static int validarInt(int numero) {
         if (numero <= 0) {
             throw new IllegalArgumentException("O numero deve ser positivo");
         }
-
+        
         if (numero > Integer.MAX_VALUE) {
             throw new IllegalArgumentException("O numero é muito grande");
         }
+
+        return numero;
     }
-
+    
+    public static String formatar(String texto) {
+        return texto.trim().toLowerCase();
+    }
+    
     public abstract String getTipo();
-
+    
     public String toString() {
         return getTipo() +
-                " | Nome: " + nome +
-                " | Saldo: " + saldo;
+        " | Nome: " + nome +
+        " | Saldo: " + saldo;
     }
-
+    
 }
